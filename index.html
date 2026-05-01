@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World Is Yours · Montana Tracker</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%23FFD700"/><stop offset="100%25" stop-color="%23C9302C"/></linearGradient></defs><rect width="64" height="64" fill="%230a0506"/><circle cx="32" cy="32" r="22" fill="none" stroke="url(%23g)" stroke-width="2.5"/><ellipse cx="32" cy="32" rx="22" ry="9" fill="none" stroke="url(%23g)" stroke-width="2"/><ellipse cx="32" cy="32" rx="9" ry="22" fill="none" stroke="url(%23g)" stroke-width="2"/><line x1="10" y1="32" x2="54" y2="32" stroke="url(%23g)" stroke-width="1.5"/><line x1="32" y1="10" x2="32" y2="54" stroke="url(%23g)" stroke-width="1.5"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Playfair+Display:ital,wght@1,700;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-deep: #07050a;
+  --bg-card: #14080a;
+  --bg-card-2: #1c0d10;
+  --border: #3a1a1c;
+  --border-glow: #5a2c2e;
+  --text-primary: #f5e6d3;
+  --text-secondary: #a89886;
+  --text-dim: #6b5a4f;
+  --accent-red: #c9302c;
+  --accent-red-bright: #ff3b30;
+  --accent-gold: #d4af37;
+  --accent-gold-bright: #ffd700;
+  --neon-pink: #ff2d92;
+  --neon-cyan: #00d9ff;
+  --success: #2faa5c;
+  --warning: #f5a623;
+  --danger: #ff3b30;
+}
+
+html { color-scheme: dark; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(ellipse at top, #2a0a14 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, #1a0820 0%, transparent 60%),
+    var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  background-attachment: fixed;
+  background-color: var(--bg-deep);
+}
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* HEADER */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 32px 24px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(201, 48, 44, 0.08) 0%, transparent 100%), var(--bg-card);
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.025) 10px, rgba(212, 175, 55, 0.025) 11px);
+  pointer-events: none;
+}
+.brand-tag {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 8px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  position: relative;
+}
+.brand-title {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(34px, 6.5vw, 76px);
+  letter-spacing: 3px;
+  line-height: 1;
+  white-space: nowrap;
+  background: linear-gradient(180deg, var(--accent-gold-bright) 0%, var(--accent-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(201, 48, 44, 0.3);
+  margin-bottom: 8px;
+  position: relative;
+}
+.brand-subtitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  position: relative;
+}
+.globe {
+  position: absolute;
+  top: 24px; right: 24px;
+  font-size: 32px;
+  filter: drop-shadow(0 0 12px var(--accent-gold));
+  opacity: 0.7;
+}
+
+/* GOAL PROGRESS */
+.goal-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.goal-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.goal-amounts {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+.goal-amounts .current {
+  color: var(--accent-gold);
+  font-size: 38px;
+}
+.goal-amounts .separator { color: var(--text-dim); margin: 0 8px; }
+.goal-amounts .target { color: var(--text-secondary); }
+
+.progress-bar {
+  height: 32px;
+  background: #1a0a0c;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-red) 0%, var(--accent-gold) 100%);
+  position: relative;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(0,0,0,0.15) 10px, rgba(0,0,0,0.15) 11px);
+}
+.progress-percent {
+  position: absolute;
+  top: 50%; right: 12px;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  text-shadow: 0 0 4px rgba(0,0,0,0.9);
+  z-index: 2;
+}
+.goal-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.goal-meta-item .label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.goal-meta-item .value {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 24px;
+  color: var(--text-primary);
+}
+
+/* FLETCHER BOX */
+.fletcher-box {
+  background: linear-gradient(135deg, #1a0a0c 0%, #0d0506 100%);
+  border-left: 4px solid var(--accent-red);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.fletcher-box::before {
+  content: '"';
+  position: absolute;
+  top: -40px; right: 16px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 200px;
+  color: var(--accent-red);
+  opacity: 0.12;
+  line-height: 1;
+}
+.fletcher-tag {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  position: relative;
+}
+.fletcher-message {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  position: relative;
+}
+.fletcher-quota {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  position: relative;
+}
+.fletcher-quota .amount {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 32px;
+  color: var(--accent-gold-bright);
+  margin-left: 8px;
+  letter-spacing: 1px;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  margin: 32px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--accent-gold);
+}
+
+/* CARDS */
+.log-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.product-block {
+  padding: 20px;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.product-block-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.product-block-title .price {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+.input-group label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.input-group input,
+.input-group select {
+  background: #0a0506;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--accent-gold);
+}
+.input-group input::placeholder { color: var(--text-dim); }
+
+.daily-summary {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+  border: 1px solid var(--accent-gold);
+  padding: 16px 20px;
+  margin: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.daily-summary .label {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.daily-summary .amount {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 32px;
+  color: var(--accent-gold);
+}
+
+.btn {
+  background: linear-gradient(180deg, var(--accent-red) 0%, #8b1f1c 100%);
+  border: 1px solid var(--accent-red);
+  color: white;
+  padding: 14px 28px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+.btn:hover {
+  background: linear-gradient(180deg, var(--accent-red-bright) 0%, var(--accent-red) 100%);
+  box-shadow: 0 0 20px rgba(255, 59, 48, 0.4);
+}
+.btn:active { transform: translateY(1px); }
+.btn.secondary {
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  color: var(--text-secondary);
+}
+.btn.secondary:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  box-shadow: none;
+  background: transparent;
+}
+
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+}
+.stat-card.success { border-color: var(--success); }
+.stat-card.danger { border-color: var(--danger); }
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.stat-value {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: 32px;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+.stat-value.gold { color: var(--accent-gold); }
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* HISTORY TABLE */
+.history-wrap { overflow-x: auto; }
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.history-table th {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.history-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.history-table tr:hover td { background: rgba(201, 48, 44, 0.06); }
+.history-table .badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+}
+.badge.crushed { background: var(--success); color: #052b14; }
+.badge.ok { background: var(--accent-gold); color: #1a1208; }
+.badge.weak { background: var(--warning); color: #2a1900; }
+.badge.dead { background: var(--danger); color: white; }
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.icon-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+/* SETTINGS */
+.settings-toggle {
+  background: transparent;
+  border: 1px dashed var(--border-glow);
+  color: var(--text-secondary);
+  padding: 12px 20px;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 2px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+}
+.settings-toggle:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+.settings-panel {
+  display: none;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  margin-top: 12px;
+}
+.settings-panel.open { display: block; }
+.danger-zone {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.btn.danger-btn {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+.btn.danger-btn:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.footer-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  transition: opacity 0.5s;
+}
+.footer-attr {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  body { padding: 16px 12px 48px; }
+  .header { padding: 24px 16px; }
+  .globe { font-size: 22px; top: 14px; right: 14px; }
+  .goal-section, .log-card, .product-block { padding: 18px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .fletcher-box { padding: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="header">
+  <div class="globe">🌐</div>
+  <div class="brand-tag">Montana Empire · Miami 305</div>
+  <h1 class="brand-title">THE WORLD IS YOURS</h1>
+  <div class="brand-subtitle">"First you get the money, then you get the power." — Tony Montana</div>
+</header>
+
+<section class="goal-section">
+  <div class="goal-header">
+    <div>
+      <div class="goal-label">Conquista do Império</div>
+      <div class="goal-amounts">
+        <span class="current" id="currentNet">R$ 0</span>
+        <span class="separator">/</span>
+        <span class="target" id="goalTarget">R$ 100.000</span>
+      </div>
+    </div>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    <div class="progress-percent" id="progressPercent">0%</div>
+  </div>
+  <div class="goal-meta">
+    <div class="goal-meta-item">
+      <div class="label">Dia atual</div>
+      <div class="value" id="currentDay">0 / 90</div>
+    </div>
+    <div class="goal-meta-item">
+      <div class="label">Restantes</div>
+      <div class="value" id="daysLeft">90</div>
+    </div>
+    <div class="goal-meta-item">
+      <div class="label">Falta</div>
+      <div class="value" id="amountLeft">R$ 100.000</div>
+    </div>
+    <div class="goal-meta-item">
+      <div class="label">vs. esperado</div>
+      <div class="value" id="paceStatus">—</div>
+    </div>
+  </div>
+</section>
+
+<section class="fletcher-box">
+  <div class="fletcher-tag" id="fletcherTag">Fletcher · O Cobrador</div>
+  <div class="fletcher-message" id="fletcherMessage">Bem-vindo ao Império. Você decidiu que vai bater 100k em 3 meses. Boa. Agora cumpra. Comece registrando o dia de hoje — sem números, conversa fiada não paga ads.</div>
+  <div class="fletcher-quota">
+    Quota de hoje:
+    <span class="amount" id="todayQuota">R$ 1.540</span>
+  </div>
+</section>
+
+<h2 class="section-title">Registrar o Dia</h2>
+<div class="log-card">
+  <div class="input-row" style="margin-bottom: 16px;">
+    <div class="input-group" style="max-width: 220px;">
+      <label>Data</label>
+      <input type="date" id="logDate">
+    </div>
+  </div>
+
+  <div class="product-block">
+    <div class="product-block-title">
+      <span>🟥 Tapete</span>
+      <span class="price">R$ 137 + upsell R$ 26 · −20% atendente</span>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Vendas (unidades)</label>
+        <input type="number" id="tapeteUnits" min="0" placeholder="0">
+      </div>
+      <div class="input-group">
+        <label>Upsells pagos</label>
+        <input type="number" id="tapeteUpsells" min="0" placeholder="0">
+      </div>
+      <div class="input-group">
+        <label>Gasto em ads (R$)</label>
+        <input type="number" id="tapeteAds" min="0" step="0.01" placeholder="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="product-block">
+    <div class="product-block-title">
+      <span>🟨 Colágeno</span>
+      <span class="price">R$ 197</span>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Vendas (unidades)</label>
+        <input type="number" id="colagenoUnits" min="0" placeholder="0">
+      </div>
+      <div class="input-group">
+        <label>Gasto em ads (R$)</label>
+        <input type="number" id="colagenoAds" min="0" step="0.01" placeholder="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="daily-summary">
+    <div class="label">Líquido do dia</div>
+    <div class="amount" id="livePreview">R$ 0</div>
+  </div>
+
+  <button class="btn" id="saveBtn">Registrar e fechar o dia</button>
+</div>
+
+<h2 class="section-title">Números do Império</h2>
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Líquido acumulado</div>
+    <div class="stat-value gold" id="statTotal">R$ 0</div>
+    <div class="stat-sub" id="statTotalSub">plataforma já descontada</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Média / dia trabalhado</div>
+    <div class="stat-value" id="statAvg">R$ 0</div>
+    <div class="stat-sub" id="statAvgSub">precisa de R$ —/dia</div>
+  </div>
+  <div class="stat-card" id="statProjectionCard">
+    <div class="stat-label">Projeção final</div>
+    <div class="stat-value" id="statProjection">R$ 0</div>
+    <div class="stat-sub" id="statProjectionSub">no ritmo atual</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Dias trabalhados</div>
+    <div class="stat-value" id="statDays">0</div>
+    <div class="stat-sub" id="statDaysSub">streak: 0</div>
+  </div>
+</div>
+
+<h2 class="section-title">Histórico</h2>
+<div class="log-card">
+  <div class="history-wrap">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Tapete</th>
+          <th>Colágeno</th>
+          <th>Ads</th>
+          <th>Líquido</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="historyBody">
+        <tr><td colspan="7" class="empty-state">Nenhum dia registrado. O primeiro tijolo do império é hoje.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="section-title">Configurações</h2>
+<button class="settings-toggle" id="settingsToggle">⚙ Abrir / fechar configurações</button>
+<div class="settings-panel" id="settingsPanel">
+  <div class="input-row">
+    <div class="input-group">
+      <label>Data de início</label>
+      <input type="date" id="setStartDate">
+    </div>
+    <div class="input-group">
+      <label>Meta total (R$)</label>
+      <input type="number" id="setGoal" step="100">
+    </div>
+    <div class="input-group">
+      <label>Prazo (dias)</label>
+      <input type="number" id="setGoalDays" min="1">
+    </div>
+  </div>
+  <div class="input-row" style="margin-top: 12px;">
+    <div class="input-group">
+      <label>Comissão atendente (%)</label>
+      <input type="number" id="setCommission" min="0" max="100" step="0.1">
+    </div>
+    <div class="input-group">
+      <label>Plataforma / mês (R$)</label>
+      <input type="number" id="setPlatform" min="0" step="10">
+    </div>
+    <div class="input-group">
+      <label>Dias úteis / semana</label>
+      <input type="number" id="setWorkDays" min="1" max="7">
+    </div>
+  </div>
+  <button class="btn secondary" style="margin-top: 16px;" id="saveSettings">Salvar configurações</button>
+  <div class="danger-zone">
+    <button class="btn danger-btn" id="resetBtn">⚠ Apagar todos os dados</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-quote" id="rotatingQuote">"First you get the money, then you get the power."</div>
+  <div class="footer-attr">— Scarface · 1983</div>
+</footer>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'el_imperio_v1';
+const PRICE_TAPETE = 137;
+const PRICE_UPSELL = 26;
+const PRICE_COLAGENO = 197;
+
+const TONY_QUOTES = [
+  '"First you get the money, then you get the power, then you get the women."',
+  '"The world is yours, and everything in it."',
+  '"All I have in this world is my balls and my word."',
+  '"Make way for the bad guy."',
+  '"Say hello to my little friend."',
+  '"Don\'t get high on your own supply."',
+  '"Every dog has his day."',
+  '"In this country, you gotta make the money first."'
+];
+
+let state = loadState();
+
+function defaultState() {
+  return {
+    settings: {
+      startDate: todayISO(),
+      goal: 100000,
+      goalDays: 90,
+      commissionRate: 0.20,
+      platformMonthly: 400,
+      workDaysPerWeek: 6
+    },
+    entries: {}
+  };
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      const d = defaultState();
+      return { settings: { ...d.settings, ...s.settings }, entries: s.entries || {} };
+    }
+  } catch (e) { console.warn(e); }
+  return defaultState();
+}
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function todayISO() {
+  const d = new Date();
+  const tz = d.getTimezoneOffset() * 60000;
+  return new Date(d - tz).toISOString().slice(0, 10);
+}
+
+function calcEntry(e) {
+  const tu = parseInt(e.tapeteUnits) || 0;
+  const tup = parseInt(e.tapeteUpsells) || 0;
+  const tap = parseFloat(e.tapeteAds) || 0;
+  const cu = parseInt(e.colagenoUnits) || 0;
+  const cap = parseFloat(e.colagenoAds) || 0;
+  const tapeteRev = tu * PRICE_TAPETE + tup * PRICE_UPSELL;
+  const commission = tapeteRev * (state.settings.commissionRate || 0);
+  const tapeteNet = tapeteRev - commission - tap;
+  const colagenoRev = cu * PRICE_COLAGENO;
+  const colagenoNet = colagenoRev - cap;
+  return {
+    tapeteRev, commission, tapeteNet, colagenoRev, colagenoNet,
+    totalNet: tapeteNet + colagenoNet,
+    totalAds: tap + cap
+  };
+}
+
+function diffDays(d1, d2) {
+  const a = new Date(d1 + 'T00:00:00');
+  const b = new Date(d2 + 'T00:00:00');
+  return Math.floor((b - a) / 86400000);
+}
+
+function getStats() {
+  const start = state.settings.startDate;
+  const today = todayISO();
+  const dayNumber = Math.max(1, diffDays(start, today) + 1);
+  const daysElapsed = Math.max(0, Math.min(state.settings.goalDays, dayNumber));
+  const daysLeft = Math.max(0, state.settings.goalDays - daysElapsed);
+
+  // platform fee proportional to elapsed days
+  const totalPlatform = Math.ceil(state.settings.goalDays / 30) * state.settings.platformMonthly;
+  const proportionalPlatform = Math.min(
+    totalPlatform,
+    Math.ceil(daysElapsed / 30) * state.settings.platformMonthly
+  );
+
+  let totalNet = -proportionalPlatform;
+  let workedDays = 0;
+  Object.keys(state.entries).forEach(date => {
+    const c = calcEntry(state.entries[date]);
+    const e = state.entries[date];
+    const hasActivity = (e.tapeteUnits || e.colagenoUnits || e.tapeteAds || e.colagenoAds);
+    if (hasActivity) workedDays++;
+    totalNet += c.totalNet;
+  });
+
+  const goal = state.settings.goal;
+  const remaining = Math.max(0, goal - totalNet);
+  const requiredPerDay = daysLeft > 0 ? remaining / daysLeft : 0;
+  const avgPerWorkedDay = workedDays > 0 ? (totalNet + proportionalPlatform) / workedDays : 0;
+
+  const remainingWorkDays = Math.max(0, Math.round(daysLeft * state.settings.workDaysPerWeek / 7));
+  const projection = totalNet + (avgPerWorkedDay * remainingWorkDays);
+
+  // streak: consecutive days back from today with entries
+  let streak = 0;
+  let cursor = new Date(today + 'T00:00:00');
+  for (let i = 0; i < 365; i++) {
+    const tz = cursor.getTimezoneOffset() * 60000;
+    const key = new Date(cursor - tz).toISOString().slice(0, 10);
+    const e = state.entries[key];
+    if (e && (e.tapeteUnits || e.colagenoUnits || e.tapeteAds || e.colagenoAds)) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else break;
+  }
+
+  const todayEntry = state.entries[today];
+  const todayNet = todayEntry ? calcEntry(todayEntry).totalNet : 0;
+  const todayPerformance = requiredPerDay > 0 ? todayNet / requiredPerDay : 0;
+
+  return {
+    dayNumber, daysElapsed, daysLeft, totalNet, goal, remaining,
+    requiredPerDay, avgPerWorkedDay, projection, workedDays, streak,
+    proportionalPlatform, todayEntry, todayNet, todayPerformance,
+    progressPct: Math.max(0, Math.min(100, (totalNet / goal) * 100))
+  };
+}
+
+function getFletcherMessage(stats) {
+  if (stats.daysLeft === 0) {
+    if (stats.totalNet >= stats.goal) {
+      return { msg: "Você bateu. Aceitável. Agora dobra a meta — quem para na chegada nunca foi pra correr de verdade.", tag: "Imperio Conquistado" };
+    }
+    return { msg: `Acabou. Faltaram R$ ${fmt(stats.remaining)}. Da próxima vez você vai querer mais ou vai querer continuar reclamando?`, tag: "Tempo Esgotado" };
+  }
+
+  if (!stats.todayEntry && stats.dayNumber > 0 && stats.dayNumber <= state.settings.goalDays) {
+    const hour = new Date().getHours();
+    if (hour < 12) return { msg: "Manhã pra quem trabalha. O dia mal começou e o Fletcher já está aqui — bota os números no lugar certo e mexe a estrutura.", tag: "Comece Agora" };
+    if (hour < 18) return { msg: "Tarde. Cadê o dia de hoje? Quota não se cumpre sozinha — e o tempo não pede licença pra passar.", tag: "Onde Voce Esta" };
+    return { msg: "Já é noite e o dia segue em branco. Chega de empurrar com a barriga. Registra agora, antes que vire mais um dia perdido.", tag: "Fim Do Dia" };
+  }
+
+  if (stats.todayEntry) {
+    const p = stats.todayPerformance;
+    if (p >= 1.5) return { msg: "Não para. Continua. Aceleração não pede licença e não pede aplauso. Amanhã você faz de novo, e melhor.", tag: "Destruindo" };
+    if (p >= 1.0) return { msg: "No tempo. Mas isso é o mínimo de quem decidiu chegar nos 100k. Não relaxa, não comemora, continua.", tag: "No Ritmo" };
+    if (p >= 0.7) return { msg: "Você está arrastando. Não é meu tempo. Fecha o que falta amanhã ou começa a se acostumar a ver a meta de longe.", tag: "Arrastando" };
+    if (p >= 0.3) return { msg: "Isso é o que você chama de trabalho? Faz de novo. Eu não estou aqui pra te fazer sentir bem — estou aqui pra te ver chegar.", tag: "Ruim" };
+    return { msg: "Patético. Um dia desses derruba o império inteiro. Não me faz repetir — amanhã você aparece com número, não com desculpa.", tag: "Inaceitavel" };
+  }
+
+  const expected = (stats.dayNumber / state.settings.goalDays) * stats.goal;
+  const ratio = expected > 0 ? stats.totalNet / expected : 1;
+  if (ratio >= 1.1) return { msg: "Adiantado. Bom. Mas adiantado vira atrasado num piscar — não é hora de comemorar, é hora de pisar fundo.", tag: "Adiantado" };
+  if (ratio >= 0.9) return { msg: "No ritmo. Mantém a régua. Conversa fiada não paga ads, planilha bonita não vende sozinha.", tag: "No Ritmo" };
+  return { msg: "Atrasado. Cada dia perdido é dia que não volta. Bota os números, ajusta a estrutura e mexe — agora.", tag: "Atrasado" };
+}
+
+function fmt(n) {
+  if (!isFinite(n)) n = 0;
+  return Math.round(n).toLocaleString('pt-BR');
+}
+
+function readForm() {
+  return {
+    tapeteUnits: parseInt(document.getElementById('tapeteUnits').value) || 0,
+    tapeteUpsells: parseInt(document.getElementById('tapeteUpsells').value) || 0,
+    tapeteAds: parseFloat(document.getElementById('tapeteAds').value) || 0,
+    colagenoUnits: parseInt(document.getElementById('colagenoUnits').value) || 0,
+    colagenoAds: parseFloat(document.getElementById('colagenoAds').value) || 0
+  };
+}
+
+function loadFormForDate(date) {
+  const e = state.entries[date] || {};
+  document.getElementById('tapeteUnits').value = e.tapeteUnits || '';
+  document.getElementById('tapeteUpsells').value = e.tapeteUpsells || '';
+  document.getElementById('tapeteAds').value = e.tapeteAds || '';
+  document.getElementById('colagenoUnits').value = e.colagenoUnits || '';
+  document.getElementById('colagenoAds').value = e.colagenoAds || '';
+  updateLivePreview();
+}
+
+function updateLivePreview() {
+  const c = calcEntry(readForm());
+  const el = document.getElementById('livePreview');
+  el.textContent = 'R$ ' + fmt(c.totalNet);
+  el.style.color = c.totalNet >= 0 ? 'var(--accent-gold)' : 'var(--danger)';
+}
+
+function loadSettingsForm() {
+  document.getElementById('setStartDate').value = state.settings.startDate;
+  document.getElementById('setGoal').value = state.settings.goal;
+  document.getElementById('setGoalDays').value = state.settings.goalDays;
+  document.getElementById('setCommission').value = (state.settings.commissionRate * 100).toFixed(1);
+  document.getElementById('setPlatform').value = state.settings.platformMonthly;
+  document.getElementById('setWorkDays').value = state.settings.workDaysPerWeek;
+}
+
+function render() {
+  const s = getStats();
+
+  document.getElementById('currentNet').textContent = 'R$ ' + fmt(s.totalNet);
+  document.getElementById('goalTarget').textContent = 'R$ ' + fmt(state.settings.goal);
+  document.getElementById('progressFill').style.width = s.progressPct + '%';
+  document.getElementById('progressPercent').textContent = s.progressPct.toFixed(1) + '%';
+  document.getElementById('currentDay').textContent = Math.min(s.dayNumber, state.settings.goalDays) + ' / ' + state.settings.goalDays;
+  document.getElementById('daysLeft').textContent = s.daysLeft;
+  document.getElementById('amountLeft').textContent = 'R$ ' + fmt(s.remaining);
+
+  const expected = (s.dayNumber / state.settings.goalDays) * s.goal;
+  const paceEl = document.getElementById('paceStatus');
+  if (s.dayNumber > 0 && Object.keys(state.entries).length > 0) {
+    const diff = s.totalNet - expected;
+    if (diff >= 0) { paceEl.textContent = '+R$ ' + fmt(diff); paceEl.style.color = 'var(--success)'; }
+    else { paceEl.textContent = '-R$ ' + fmt(Math.abs(diff)); paceEl.style.color = 'var(--accent-red-bright)'; }
+  } else {
+    paceEl.textContent = '—'; paceEl.style.color = '';
+  }
+
+  const fl = getFletcherMessage(s);
+  document.getElementById('fletcherMessage').textContent = fl.msg;
+  document.getElementById('fletcherTag').textContent = 'Fletcher · ' + fl.tag;
+  document.getElementById('todayQuota').textContent = 'R$ ' + fmt(s.requiredPerDay);
+
+  document.getElementById('statTotal').textContent = 'R$ ' + fmt(s.totalNet);
+  document.getElementById('statTotalSub').textContent = `plataforma descontada: R$ ${fmt(s.proportionalPlatform)}`;
+  document.getElementById('statAvg').textContent = 'R$ ' + fmt(s.avgPerWorkedDay);
+  document.getElementById('statAvgSub').textContent = `precisa de R$ ${fmt(s.requiredPerDay)}/dia`;
+  document.getElementById('statProjection').textContent = 'R$ ' + fmt(s.projection);
+  const projDiff = s.projection - s.goal;
+  const projCard = document.getElementById('statProjectionCard');
+  projCard.classList.remove('success', 'danger');
+  if (Object.keys(state.entries).length === 0) {
+    document.getElementById('statProjectionSub').textContent = 'sem dados ainda';
+  } else if (projDiff >= 0) {
+    document.getElementById('statProjectionSub').textContent = `+R$ ${fmt(projDiff)} acima da meta`;
+    projCard.classList.add('success');
+  } else {
+    document.getElementById('statProjectionSub').textContent = `−R$ ${fmt(Math.abs(projDiff))} abaixo da meta`;
+    projCard.classList.add('danger');
+  }
+  document.getElementById('statDays').textContent = s.workedDays;
+  document.getElementById('statDaysSub').textContent = `streak atual: ${s.streak}`;
+
+  renderHistory(s);
+  updateLivePreview();
+}
+
+function renderHistory(s) {
+  const tbody = document.getElementById('historyBody');
+  const dates = Object.keys(state.entries).sort().reverse();
+  if (dates.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Nenhum dia registrado. O primeiro tijolo do império é hoje.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = dates.map(date => {
+    const e = state.entries[date];
+    const c = calcEntry(e);
+    const ratio = s.requiredPerDay > 0 ? c.totalNet / s.requiredPerDay : (c.totalNet > 0 ? 1.5 : 0);
+    let badge = '';
+    if (ratio >= 1.5) badge = '<span class="badge crushed">esmagou</span>';
+    else if (ratio >= 1) badge = '<span class="badge ok">no tempo</span>';
+    else if (ratio >= 0.5) badge = '<span class="badge weak">arrastou</span>';
+    else badge = '<span class="badge dead">quebrou</span>';
+    const d = new Date(date + 'T12:00:00');
+    const dateLabel = d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+    const tap = `${e.tapeteUnits || 0}u${e.tapeteUpsells ? ` · ${e.tapeteUpsells} ups` : ''}`;
+    const col = `${e.colagenoUnits || 0}u`;
+    return `<tr>
+      <td><strong>${dateLabel}</strong></td>
+      <td>${tap}</td>
+      <td>${col}</td>
+      <td>R$ ${fmt(c.totalAds)}</td>
+      <td><strong style="color: var(--accent-gold)">R$ ${fmt(c.totalNet)}</strong></td>
+      <td>${badge}</td>
+      <td><button class="icon-btn" data-del="${date}">✕</button></td>
+    </tr>`;
+  }).join('');
+  tbody.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const d = btn.getAttribute('data-del');
+      if (!confirm(`Apagar registro de ${d}? Fletcher não vai gostar.`)) return;
+      delete state.entries[d];
+      saveState();
+      render();
+    });
+  });
+}
+
+document.getElementById('logDate').value = todayISO();
+document.getElementById('logDate').addEventListener('change', e => loadFormForDate(e.target.value));
+['tapeteUnits','tapeteUpsells','tapeteAds','colagenoUnits','colagenoAds'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateLivePreview);
+});
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const date = document.getElementById('logDate').value;
+  if (!date) { alert('Coloca a data, vai.'); return; }
+  state.entries[date] = readForm();
+  saveState();
+  render();
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = '✓ Registrado. Próximo.';
+  setTimeout(() => { btn.textContent = 'Registrar e fechar o dia'; }, 1600);
+});
+
+document.getElementById('settingsToggle').addEventListener('click', () => {
+  document.getElementById('settingsPanel').classList.toggle('open');
+  loadSettingsForm();
+});
+
+document.getElementById('saveSettings').addEventListener('click', () => {
+  state.settings.startDate = document.getElementById('setStartDate').value;
+  state.settings.goal = parseFloat(document.getElementById('setGoal').value) || 100000;
+  state.settings.goalDays = parseInt(document.getElementById('setGoalDays').value) || 90;
+  state.settings.commissionRate = (parseFloat(document.getElementById('setCommission').value) || 0) / 100;
+  state.settings.platformMonthly = parseFloat(document.getElementById('setPlatform').value) || 0;
+  state.settings.workDaysPerWeek = parseInt(document.getElementById('setWorkDays').value) || 6;
+  saveState();
+  render();
+  const btn = document.getElementById('saveSettings');
+  btn.tex
